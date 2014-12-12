@@ -1,0 +1,33 @@
+{
+  "name": "nodei",
+  "version": "0.0.0",
+  "description": "Run script, then REPL it with automatically exported globals",
+  "author": "Eugene Sharygin <eush77@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/eush77/nodei",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eush77/nodei"
+  },
+  "bugs": {
+    "url": "https://github.com/eush77/nodei/issues"
+  },
+  "keywords": [
+    "repl",
+    "console",
+    "script",
+    "javascript",
+    "interactive",
+    "node",
+    "vm",
+    "export",
+    "global",
+    "object",
+    "scope"
+  ],
+  "dependencies": {
+    "extend": "^2.0.0",
+    "minimist": "^1.1.0"
+  },
+  "devDependencies": {}
+}
