@@ -37,7 +37,7 @@ module.exports = function (filename, cb) {
     if (err) return cb(err);
 
     var sandbox = {};
-    vm.runInNewContext(script, sandbox);
+    vm.runInNewContext(script, sandbox, filename);
 
     var repl = replWith(sandbox);
     return cb(null, repl);
