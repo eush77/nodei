@@ -1,6 +1,8 @@
 'use strict';
 
-var extend = require('extend');
+var zipmap = require('zipmap')
+  , diff = require('object-diff')
+  , pairs = require('object-pairs');
 
 var repl = require('repl')
   , vm = require('vm')
@@ -19,8 +21,39 @@ var replWith = function (context) {
     useGlobal: true
   });
 
-  extend(r.context, context);
+  // Some context properties have getters, so
+  // it is not possible to just reassign them.
+  pairs(diff(r.context, context)).forEach(function (prop) {
+    var key = prop[0], value = prop[1];
+    delete r.context[key];
+    r.context[key] = value;
+  });
+
   return r;
+};
+
+
+/**
+ * Construct a minimal sandbox for script execution.
+ *
+ * It includes:
+ *   - console,
+ *   - Buffer,
+ *   - setTimeout,
+ *   - clearTimeout,
+ *   - setInterval,
+ *   - clearInterval.
+ */
+var makeSandbox = function () {
+  var attrs = ['console', 'Buffer', 'setTimeout',
+               'clearTimeout', 'setInterval', 'clearInterval'];
+
+  return zipmap(attrs.map(function (attr) {
+    return {
+      key: attr,
+      value: global[attr]
+    };
+  }));
 };
 
 
@@ -36,7 +69,7 @@ module.exports = function (filename, cb) {
   fs.readFile(filename, { encoding: 'utf8' }, function (err, script) {
     if (err) return cb(err);
 
-    var sandbox = {};
+    var sandbox = makeSandbox();
     vm.runInNewContext(script, sandbox, filename);
 
     var repl = replWith(sandbox);

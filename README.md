@@ -7,7 +7,7 @@
 
 `nodei` executes the script file and spawns REPL with exported global declarations.
 
-Fosters experimentation and rapid prototyping of small JavaScript snippets.
+It fosters experimentation and rapid prototyping of small JavaScript snippets.
 
 ## Usage
 
@@ -24,6 +24,18 @@ $ nodei foo.js
 > x
 2
 ```
+
+## Caveats
+
+Since script is loaded into a separate sandbox, there is no way to use a module system, so that's not supported.
+
+What _is_ supported, are the following [globals](http://nodejs.org/api/globals.html):
+  - `console`,
+  - `Buffer`,
+  - `setTimeout`,
+  - `clearTimeout`,
+  - `setInterval`,
+  - `clearInterval`.
 
 ## Install
 
