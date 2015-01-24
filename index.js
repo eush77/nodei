@@ -10,26 +10,19 @@ var repl = require('repl')
 
 
 /**
- * Start the REPL and expose variables in `context`.
+ * Update REPL with variables in the `context`.
  *
+ * @arg {Repl} repl
  * @arg {Object} context
- * @return {Repl}
  */
-var replWith = function (context) {
-  var r = repl.start({
-    prompt: '> ',
-    useGlobal: true
-  });
-
+var updateRepl = function (repl, context) {
   // Some context properties have getters, so
   // it is not possible to just reassign them.
-  pairs(diff(r.context, context)).forEach(function (prop) {
+  pairs(diff(repl.context, context)).forEach(function (prop) {
     var key = prop[0], value = prop[1];
-    delete r.context[key];
-    r.context[key] = value;
+    delete repl.context[key];
+    repl.context[key] = value;
   });
-
-  return r;
 };
 
 
@@ -58,6 +51,26 @@ var makeSandbox = function () {
 
 
 /**
+ * Load file and update REPL.
+ *
+ * @arg {Repl} repl
+ * @arg {string} filename
+ * @arg {function(err)} cb
+ */
+var loadFile = function (repl, filename, cb) {
+  fs.readFile(filename, { encoding: 'utf8' }, function (err, script) {
+    if (err) return cb(err);
+
+    var sandbox = makeSandbox();
+    vm.runInNewContext(script, sandbox, filename);
+
+    updateRepl(repl, sandbox);
+    return cb(null);
+  });
+};
+
+
+/**
  * Start the REPL and expose top-level definitions in `filename`.
  *
  * @arg {string} filename
@@ -66,13 +79,16 @@ var makeSandbox = function () {
 module.exports = function (filename, cb) {
   cb = cb || function () {};
 
-  fs.readFile(filename, { encoding: 'utf8' }, function (err, script) {
-    if (err) return cb(err);
-
-    var sandbox = makeSandbox();
-    vm.runInNewContext(script, sandbox, filename);
-
-    var repl = replWith(sandbox);
-    return cb(null, repl);
+  var r = repl.start({
+    prompt: '> ',
+    useGlobal: true
   });
+
+  var load = function (filename) {
+    loadFile(r, filename, function (err) {
+      if (err) console.error(err);
+    });
+  };
+
+  load(filename);
 };
