@@ -84,11 +84,29 @@ module.exports = function (filename, cb) {
     useGlobal: true
   });
 
-  var load = function (filename) {
+  var load = function (filename, cb) {
     loadFile(r, filename, function (err) {
-      if (err) console.error(err);
+      if (err) console.error(err.toString());
+
+      if (cb) {
+        cb.call(r);
+      }
     });
   };
+
+  r.defineCommand('load', {
+    help: 'Load JS file into this REPL',
+    action: function (filename) {
+      load(filename, this.displayPrompt);
+    }
+  });
+
+  r.defineCommand('reload', {
+    help: 'Reload ' + filename,
+    action: function () {
+      load(filename, this.displayPrompt);
+    }
+  });
 
   load(filename);
 };
