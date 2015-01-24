@@ -74,11 +74,8 @@ var loadFile = function (repl, filename, cb) {
  * Start the REPL and expose top-level definitions in `filename`.
  *
  * @arg {string} filename
- * @arg {function(Error, Repl)} [cb]
  */
-module.exports = function (filename, cb) {
-  cb = cb || function () {};
-
+module.exports = function (filename) {
   var r = repl.start({
     prompt: '> ',
     useGlobal: true

@@ -28,6 +28,4 @@ var argv = (function () {
 }());
 
 
-nodei(argv._[0], function (err, repl) {
-  if (err) throw err;
-});
+nodei(argv._[0]);
