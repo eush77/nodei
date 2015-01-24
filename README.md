@@ -16,13 +16,13 @@ The goal is to foster experimentation and rapid prototyping of JavaScript snippe
 ## Example
 
 ```js
-$ nodei example/foo.js
+$ nodei examples/foo.js
 > foo
 4
 > printFoo()
 4
 
-/* Change example/foo.js. */
+/* Change examples/foo.js. */
 
 > .reload
 > foo
