@@ -40,7 +40,7 @@ $ nodei example/foo.js
 | Command        | Description
 | :------------: | :----------
 | `.reload`      | Reload the active JS file
-| `.load %file%` | Load `%file%` into REPL
+| `.load %file%` | Load `%file%` into REPL, set it as a target for future .reloads
 
 Yes, built-in `.load` is gone.
 

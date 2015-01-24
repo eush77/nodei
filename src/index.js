@@ -93,17 +93,26 @@ module.exports = function (filename) {
 
   r.defineCommand('load', {
     help: 'Load JS file into this REPL',
-    action: function (filename) {
+    action: function (filenameToLoad) {
+      filename = filenameToLoad;
       load(filename, this.displayPrompt);
     }
   });
 
-  r.defineCommand('reload', {
-    help: 'Reload ' + filename,
-    action: function () {
-      load(filename, this.displayPrompt);
+  r.defineCommand('reload', Object.create(null, {
+    help: {
+      enumerable: true,
+      get: function () {
+        return 'Reload ' + filename;
+      },
+    },
+    action: {
+      enumerable: true,
+      value: function () {
+        load(filename, this.displayPrompt);
+      }
     }
-  });
+  }));
 
   load(filename);
 };
