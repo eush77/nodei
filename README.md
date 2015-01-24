@@ -42,6 +42,8 @@ $ nodei example/foo.js
 | `.reload`      | Reload the active JS file
 | `.load %file%` | Load `%file%` into REPL
 
+Yes, built-in `.load` is gone.
+
 ## Caveats
 
 Since script is loaded into a separate sandbox, there is no way to use a module system, so that's not supported yet. Working on it!
