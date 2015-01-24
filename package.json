@@ -6,6 +6,9 @@
   "license": "MIT",
   "preferGlobal": true,
   "bin": "cli.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
   "files": [
     "cli.js",
     "src/"
@@ -37,5 +40,7 @@
     "object-pairs": "^0.1.0",
     "zipmap": "^1.1.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "tape": "^3.4.0"
+  }
 }
