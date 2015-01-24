@@ -4,8 +4,8 @@
   "description": "Run script, then REPL it with automatically exported globals",
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
-  "bin": "bin/cli.js",
   "preferGlobal": true,
+  "bin": "cli.js",
   "homepage": "https://github.com/eush77/nodei",
   "repository": {
     "type": "git",
