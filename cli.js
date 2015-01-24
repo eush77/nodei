@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-var nodei = require('./src');
+var nodei = require('./');
 
 var parseArgs = require('minimist');
 
