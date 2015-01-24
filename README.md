@@ -4,9 +4,11 @@
 
 [![Dependency Status][david-badge]][david]
 
-`nodei` executes the script file and spawns REPL with exported global declarations.
+`nodei` executes script files and exports global declarations into the REPL.
 
-It fosters experimentation and rapid prototyping of small JavaScript snippets.
+Supports REPL commands.
+
+The goal is to foster experimentation and rapid prototyping of JavaScript snippets.
 
 [david]: https://david-dm.org/eush77/nodei
 [david-badge]: https://david-dm.org/eush77/nodei.png
@@ -20,16 +22,29 @@ nodei <filename>
 ## Example
 
 ```js
-$ cat >foo.js
-var x = 2;
-$ nodei foo.js
-> x
-2
+$ nodei example/foo.js
+> foo
+4
+> printFoo()
+4
+
+/* Change example/foo.js. */
+
+> .reload
+> foo
+6
 ```
+
+## Commands
+
+| Command        | Description
+| :------------: | :----------
+| `.reload`      | Reload the active JS file
+| `.load %file%` | Load `%file%` into REPL
 
 ## Caveats
 
-Since script is loaded into a separate sandbox, there is no way to use a module system, so that's not supported.
+Since script is loaded into a separate sandbox, there is no way to use a module system, so that's not supported yet. Working on it!
 
 What _is_ supported, are the following [globals](http://nodejs.org/api/globals.html):
   - `console`,
@@ -42,7 +57,7 @@ What _is_ supported, are the following [globals](http://nodejs.org/api/globals.h
 ## Install
 
 ```shell
-npm install -g nodei
+npm install nodei -g
 ```
 
 ## License
