@@ -36,6 +36,8 @@ var updateRepl = function (repl, context) {
  *   - clearTimeout,
  *   - setInterval,
  *   - clearInterval.
+ *
+ * @return {Object}
  */
 var makeSandbox = function () {
   var attrs = ['console', 'Buffer', 'setTimeout',
@@ -74,6 +76,7 @@ var loadFile = function (repl, filename, cb) {
  * Start the REPL and expose top-level definitions in `filename`.
  *
  * @arg {string} filename
+ * @return {Repl}
  */
 module.exports = function (filename) {
   var r = repl.start({
@@ -115,4 +118,6 @@ module.exports = function (filename) {
   }));
 
   load(filename);
+
+  return r;
 };

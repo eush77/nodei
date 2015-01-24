@@ -13,12 +13,6 @@ The goal is to foster experimentation and rapid prototyping of JavaScript snippe
 [david]: https://david-dm.org/eush77/nodei
 [david-badge]: https://david-dm.org/eush77/nodei.png
 
-## Usage
-
-```
-nodei <filename>
-```
-
 ## Example
 
 ```js
@@ -43,6 +37,20 @@ $ nodei example/foo.js
 | `.load %file%` | Load `%file%` into REPL, set it as a target for future .reloads
 
 Yes, built-in `.load` is gone.
+
+## CLI
+
+```
+nodei <filename>
+```
+
+## API
+
+### `nodei(filename)`
+
+Start the REPL session, populate it with commands and load `filename`.
+
+Return the REPL instance.
 
 ## Caveats
 
