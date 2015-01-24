@@ -1,13 +1,15 @@
-# nodei [![Dependency Status][david-badge]][david]
-
 [![npm](https://nodei.co/npm/nodei.png)](https://nodei.co/npm/nodei/)
 
-[david]: https://david-dm.org/eush77/nodei
-[david-badge]: https://david-dm.org/eush77/nodei.png
+# nodei
+
+[![Dependency Status][david-badge]][david]
 
 `nodei` executes the script file and spawns REPL with exported global declarations.
 
 It fosters experimentation and rapid prototyping of small JavaScript snippets.
+
+[david]: https://david-dm.org/eush77/nodei
+[david-badge]: https://david-dm.org/eush77/nodei.png
 
 ## Usage
 
