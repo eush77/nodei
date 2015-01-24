@@ -2,7 +2,7 @@
 
 # nodei
 
-[![Dependency Status][david-badge]][david]
+[![Build Status][travis-badge]][travis] [![Dependency Status][david-badge]][david]
 
 `nodei` executes script files and exports global declarations into the REPL.
 
@@ -10,6 +10,8 @@ Supports REPL commands.
 
 The goal is to foster experimentation and rapid prototyping of JavaScript snippets.
 
+[travis]: https://travis-ci.org/eush77/nodei
+[travis-badge]: https://travis-ci.org/eush77/nodei.svg
 [david]: https://david-dm.org/eush77/nodei
 [david-badge]: https://david-dm.org/eush77/nodei.png
 
