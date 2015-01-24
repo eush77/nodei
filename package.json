@@ -11,7 +11,7 @@
   },
   "files": [
     "cli.js",
-    "src/"
+    "index.js"
   ],
   "homepage": "https://github.com/eush77/nodei",
   "repository": {
