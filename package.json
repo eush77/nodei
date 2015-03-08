@@ -35,6 +35,8 @@
     "scope"
   ],
   "dependencies": {
+    "browserify": "^9.0.3",
+    "detective": "^4.0.0",
     "object-diff": "0.0.1",
     "object-pairs": "^0.1.0",
     "object.assign": "^1.1.1",

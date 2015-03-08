@@ -1,5 +1,7 @@
 'use strict';
 
+var scriptify = require('./lib/scriptify');
+
 var zipmap = require('zipmap'),
     diff = require('object-diff'),
     pairs = require('object-pairs'),
@@ -61,7 +63,7 @@ var makeSandbox = function () {
  * @arg {function(err)} cb
  */
 var loadFile = function (repl, filename, cb) {
-  fs.readFile(filename, { encoding: 'utf8' }, function (err, script) {
+  scriptify(filename, function (err, script) {
     if (err) return cb(err);
 
     var sandbox = makeSandbox();
