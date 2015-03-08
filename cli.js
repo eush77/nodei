@@ -3,29 +3,25 @@
 
 var nodei = require('./');
 
-var parseArgs = require('minimist');
-
 
 var usage = function () {
-  console.log('Usage:  nodei <filename>');
-  process.exit(1);
+  return 'Usage:  nodei <filename>';
 };
 
-var argv = (function () {
-  var argv = parseArgs(process.argv.slice(2), {
-    unknown: function (arg) {
-      if (arg[0] == '-') {
-        usage();
+
+process.exitCode = (function (argv) {
+  switch (argv.length) {
+    case 1:
+      if (argv[0] == '--help') {
+        console.log(usage());
       }
-    }
-  });
+      else {
+        nodei(argv[0]);
+      }
+      return 0;
 
-  if (argv._.length != 1) {
-    return usage();
+    default:
+      console.error(usage());
+      return 1;
   }
-
-  return argv;
-}());
-
-
-nodei(argv._[0]);
+}(process.argv.slice(2)));
