@@ -17,14 +17,26 @@ The goal is to foster experimentation and rapid prototyping of JavaScript snippe
 
 ## Example
 
+foo.js:
+
 ```js
-$ nodei examples/foo.js
+var foo = 4;
+
+var printFoo = function () {
+  return foo;
+};
+```
+
+nodei repl session:
+
+```js
+$ nodei foo.js
 > foo
 4
 > printFoo()
 4
 
-/* Change examples/foo.js. */
+/* Change foo.js. */
 
 > .reload
 > foo
