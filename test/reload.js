@@ -35,8 +35,7 @@ test('reload', function (t) {
     repl.inputStream.write('.reload\n');
 
     repl.once('load', function () {
-      repl.inputStream.write('print()\n');
-      repl.inputStream.end();
+      repl.inputStream.end('print()\n');
     });
   }
 
