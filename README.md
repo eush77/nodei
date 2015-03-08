@@ -55,16 +55,22 @@ Yes, built-in `.load` is gone.
 ## CLI
 
 ```
-nodei <filename>
+nodei [<filename>]
 ```
 
 ## API
 
-### `nodei(filename)`
+### `nodei([filename], [options])`
 
 Start the REPL session, populate it with commands and load `filename`.
 
+`options` are passed to [`repl.start`](https://iojs.org/api/repl.html#repl_repl_start_options) and can override defaults.
+
 Return the REPL instance.
+
+### Event: 'load(filename)'
+
+Emitted when file is loaded via `.load` or `.reload`, or at startup.
 
 ## Caveats
 
