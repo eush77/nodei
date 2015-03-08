@@ -78,28 +78,21 @@ var loadFile = function (repl, filename, cb) {
  *
  * @arg {string} filename
  * @arg {object} [options] - Additional REPL options.
- * @arg {function(err)} [cb] - Callback fired when repl gets ready.
  * @return {Repl}
  */
-module.exports = function (filename, options, cb) {
-  if (typeof options == 'function') {
-    cb = options;
-    options = null;
-  }
-  else {
-    cb = cb || function () {};
-  }
+module.exports = function (filename, options) {
+  options = options || {};
 
   var repl = Repl.start(assign({
     prompt: '> ',
     useGlobal: true
   }, options));
 
-  var load = function (filename, cb) {
+  var load = function (filename) {
     loadFile(repl, filename, function (err) {
       if (err) repl.outputStream.write(err.toString() + '\n');
       repl.displayPrompt();
-      if (cb) cb();
+      repl.emit('load', filename);
     });
   };
 
@@ -125,7 +118,7 @@ module.exports = function (filename, options, cb) {
     }
   }));
 
-  load(filename, cb);
+  load(filename);
 
   return repl;
 };
