@@ -4,7 +4,7 @@ var zipmap = require('zipmap')
   , diff = require('object-diff')
   , pairs = require('object-pairs');
 
-var repl = require('repl')
+var Repl = require('repl')
   , vm = require('vm')
   , fs = require('fs');
 
@@ -79,26 +79,26 @@ var loadFile = function (repl, filename, cb) {
  * @return {Repl}
  */
 module.exports = function (filename) {
-  var r = repl.start({
+  var repl = Repl.start({
     prompt: '> ',
     useGlobal: true
   });
 
   var load = function (filename) {
-    loadFile(r, filename, function (err) {
-      if (err) console.error(err.toString());
-      r.displayPrompt();
+    loadFile(repl, filename, function (err) {
+      if (err) repl.outputStream.write(err.toString() + '\n');
+      repl.displayPrompt();
     });
   };
 
-  r.defineCommand('load', {
+  repl.defineCommand('load', {
     help: 'Load JS file into this REPL',
     action: function (filenameToLoad) {
       load(filename = filenameToLoad);
     }
   });
 
-  r.defineCommand('reload', Object.create(null, {
+  repl.defineCommand('reload', Object.create(null, {
     help: {
       enumerable: true,
       get: function () {
@@ -115,5 +115,5 @@ module.exports = function (filename) {
 
   load(filename);
 
-  return r;
+  return repl;
 };
