@@ -67,6 +67,7 @@ var loadFile = function (repl, filename, cb) {
     if (err) return cb(err);
 
     var sandbox = makeSandbox();
+    sandbox.module = sandbox.exports = {};
     vm.runInNewContext(script, sandbox, filename);
 
     updateRepl(repl, sandbox);
