@@ -8,7 +8,7 @@ var test = require('tape'),
 
 
 test('basic API checks', function (t) {
-  var repl = nodei(__dirname + '/basic/index.js', {
+  var repl = nodei({
     input: through(),
     output: devnull()
   });
