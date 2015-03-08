@@ -6,9 +6,7 @@
 
 `nodei` executes script files and exports global declarations into the REPL.
 
-Supports REPL commands.
-
-The goal is to foster experimentation and rapid prototyping of JavaScript snippets.
+Supports modules and REPL commands.
 
 [travis]: https://travis-ci.org/eush77/nodei
 [travis-badge]: https://travis-ci.org/eush77/nodei.svg
@@ -72,17 +70,16 @@ Return the REPL instance.
 
 Emitted when file is loaded via `.load` or `.reload`, or at startup.
 
-## Caveats
+## Globals
 
-Since script is loaded into a separate sandbox, there is no way to use a module system, so that's not supported yet. Working on it!
-
-What _is_ supported, are the following [globals](http://nodejs.org/api/globals.html):
-  - `console`,
-  - `Buffer`,
-  - `setTimeout`,
-  - `clearTimeout`,
-  - `setInterval`,
-  - `clearInterval`.
+- `require` works as expected (using [browserify](http://browserify.org) under covers).
+- `module` and `exports` are empty.
+- `console`.
+- `Buffer`.
+- `setTimeout`.
+- `clearTimeout`.
+- `setInterval`.
+- `clearInterval`.
 
 ## Install
 
