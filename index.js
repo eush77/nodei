@@ -76,12 +76,18 @@ var loadFile = function (repl, filename, cb) {
 /**
  * Start the REPL and expose top-level definitions in `filename`.
  *
- * @arg {string} filename
+ * @arg {string} [filename]
  * @arg {object} [options] - Additional REPL options.
  * @return {Repl}
  */
 module.exports = function (filename, options) {
-  options = options || {};
+  if (typeof filename == 'object') {
+    options = filename;
+    filename = null;
+  }
+  else {
+    options = options || {};
+  }
 
   var repl = Repl.start(assign({
     prompt: '> ',
@@ -118,7 +124,9 @@ module.exports = function (filename, options) {
     }
   }));
 
-  load(filename);
+  if (filename != null) {
+    load(filename);
+  }
 
   return repl;
 };
