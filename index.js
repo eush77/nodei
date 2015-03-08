@@ -1,12 +1,13 @@
 'use strict';
 
-var zipmap = require('zipmap')
-  , diff = require('object-diff')
-  , pairs = require('object-pairs');
+var zipmap = require('zipmap'),
+    diff = require('object-diff'),
+    pairs = require('object-pairs'),
+    assign = Object.assign || require('object.assign');
 
-var Repl = require('repl')
-  , vm = require('vm')
-  , fs = require('fs');
+var Repl = require('repl'),
+    vm = require('vm'),
+    fs = require('fs');
 
 
 /**
@@ -76,18 +77,29 @@ var loadFile = function (repl, filename, cb) {
  * Start the REPL and expose top-level definitions in `filename`.
  *
  * @arg {string} filename
+ * @arg {object} [options] - Additional REPL options.
+ * @arg {function(err)} [cb] - Callback fired when repl gets ready.
  * @return {Repl}
  */
-module.exports = function (filename) {
-  var repl = Repl.start({
+module.exports = function (filename, options, cb) {
+  if (typeof options == 'function') {
+    cb = options;
+    options = null;
+  }
+  else {
+    cb = cb || function () {};
+  }
+
+  var repl = Repl.start(assign({
     prompt: '> ',
     useGlobal: true
-  });
+  }, options));
 
-  var load = function (filename) {
+  var load = function (filename, cb) {
     loadFile(repl, filename, function (err) {
       if (err) repl.outputStream.write(err.toString() + '\n');
       repl.displayPrompt();
+      if (cb) cb();
     });
   };
 
@@ -113,7 +125,7 @@ module.exports = function (filename) {
     }
   }));
 
-  load(filename);
+  load(filename, cb);
 
   return repl;
 };
