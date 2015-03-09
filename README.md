@@ -70,17 +70,6 @@ Return the REPL instance.
 
 Emitted when file is loaded via `.load` or `.reload`, or at startup.
 
-## Globals
-
-- `require`
-- `module`, `exports` (empty)
-- `console`
-- `Buffer`
-- `setTimeout`
-- `clearTimeout`
-- `setInterval`
-- `clearInterval`
-
 ## Install
 
 ```shell
