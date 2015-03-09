@@ -89,8 +89,7 @@ module.exports = function (filename, options) {
   }
 
   var repl = Repl.start(assign({
-    prompt: '> ',
-    useGlobal: true
+    prompt: '> '
   }, options));
 
   var load = function (filename) {

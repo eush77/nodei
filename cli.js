@@ -9,10 +9,15 @@ var usage = function () {
 };
 
 
+var options = {
+  useGlobal: true
+};
+
+
 process.exitCode = (function (argv) {
   switch (argv.length) {
     case 0:
-      nodei();
+      nodei(options);
       return 0;
 
     case 1:
@@ -20,7 +25,7 @@ process.exitCode = (function (argv) {
         console.log(usage());
       }
       else {
-        nodei(argv[0]);
+        nodei(argv[0], options);
       }
       return 0;
 
