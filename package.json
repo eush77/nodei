@@ -11,8 +11,7 @@
   },
   "files": [
     "cli.js",
-    "index.js",
-    "lib/"
+    "index.js"
   ],
   "homepage": "https://github.com/eush77/nodei",
   "repository": {
@@ -36,11 +35,10 @@
     "scope"
   ],
   "dependencies": {
-    "browserify": "^9.0.3",
-    "detective": "^4.0.0",
     "object-diff": "0.0.1",
     "object-pairs": "^0.1.0",
     "object.assign": "^1.1.1",
+    "resolve-from": "^1.0.0",
     "zipmap": "^1.1.1"
   },
   "devDependencies": {

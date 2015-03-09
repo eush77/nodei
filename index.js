@@ -1,15 +1,15 @@
 'use strict';
 
-var scriptify = require('./lib/scriptify');
-
 var zipmap = require('zipmap'),
     diff = require('object-diff'),
     pairs = require('object-pairs'),
-    assign = Object.assign || require('object.assign');
+    assign = Object.assign || require('object.assign'),
+    resolveFrom = require('resolve-from');
 
 var Repl = require('repl'),
     vm = require('vm'),
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
 
 /**
@@ -63,11 +63,15 @@ var makeSandbox = function () {
  * @arg {function(err)} cb
  */
 var loadFile = function (repl, filename, cb) {
-  scriptify(filename, function (err, script) {
+  fs.readFile(filename, { encoding: 'utf8' }, function (err, script) {
     if (err) return cb(err);
 
     var sandbox = makeSandbox();
     sandbox.module = sandbox.exports = {};
+    sandbox.require = function (module) {
+      return require(resolveFrom(path.dirname(filename), module));
+    };
+
     vm.runInNewContext(script, sandbox, filename);
 
     updateRepl(repl, sandbox);
