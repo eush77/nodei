@@ -3,7 +3,7 @@
 var diff = require('object-diff'),
     pairs = require('object-pairs'),
     assign = Object.assign || require('object.assign'),
-    resolveFrom = require('resolve-from');
+    requireFor = require('require-for');
 
 var Repl = require('repl'),
     vm = require('vm'),
@@ -42,9 +42,7 @@ var makeSandbox = function (filename) {
     __dirname: dirname,
     module: {},
     exports: {},
-    require: function (module) {
-      return require(resolveFrom(dirname, module));
-    }
+    require: requireFor(dirname)
   });
   sandbox.global = sandbox;
 

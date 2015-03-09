@@ -25,17 +25,30 @@ function globals(t, end) {
     repl.outputStream.end();
   });
 
-  repl.inputStream.end(Object.keys(global)
+  repl.inputStream.write(Object.keys(global)
                        .map(function (attr) {
                          return 'typeof ' + attr + '\n';
                        })
                        .join(''));
 
+  repl.inputStream.end(Object.keys(require)
+                       .map(function (attr) {
+                         return 'typeof require.' + attr + '\n';
+                       })
+                       .join(''));
+
+  var answers = [].concat(
+    Object.keys(global)
+      .map(function (attr) { return typeof global[attr]; }),
+    Object.keys(require)
+      .map(function (attr) { return typeof require[attr]; })
+  );
+
   repl.outputStream.pipe(concat({ encoding: 'string' }, function (output) {
     t.equal(output,
-            Object.keys(global)
-            .map(function (attr) {
-              return "'" + typeof global[attr] + "'\n";
+            answers
+            .map(function (type) {
+              return "'" + type + "'\n";
             })
             .join(''),
             'should have access to globals');
