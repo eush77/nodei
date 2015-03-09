@@ -1,6 +1,6 @@
 {
   "name": "nodei",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Run script, then REPL it with automatically exported globals",
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
