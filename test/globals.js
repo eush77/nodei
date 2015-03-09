@@ -8,6 +8,15 @@ var test = require('tape'),
 
 
 test('globals', function (t) {
+  (function test(subtests) {
+    return subtests.length
+      ? subtests.shift()(t, test.bind(null, subtests))
+      : t.end();
+  }([globals, fstest]));
+});
+
+
+function globals(t, end) {
   var repl = nodei({
     prompt: '',
     input: through(),
@@ -16,10 +25,7 @@ test('globals', function (t) {
     repl.outputStream.end();
   });
 
-  var attrs = ['console', 'Buffer', 'setTimeout',
-               'clearTimeout', 'setInterval', 'clearInterval'];
-
-  repl.inputStream.end(attrs
+  repl.inputStream.end(Object.keys(global)
                        .map(function (attr) {
                          return 'typeof ' + attr + '\n';
                        })
@@ -27,11 +33,30 @@ test('globals', function (t) {
 
   repl.outputStream.pipe(concat({ encoding: 'string' }, function (output) {
     t.equal(output,
-            attrs
+            Object.keys(global)
             .map(function (attr) {
               return "'" + typeof global[attr] + "'\n";
             })
-            .join(''));
-    t.end();
+            .join(''),
+            'should have access to globals');
+    end();
   }));
-});
+}
+
+
+function fstest(t, end) {
+  var repl = nodei(__dirname + '/globals/index.js', {
+    prompt: '',
+    input: through(),
+    output: through()
+  }).once('load', function () {
+    repl.inputStream.end('echo\n');
+  }).on('exit', function () {
+    repl.outputStream.end();
+  });
+
+  repl.outputStream.pipe(concat({ encoding: 'string' }, function (output) {
+    t.equal(output, "'echo'\n", 'should pass fs + __dirname test');
+    end();
+  }));
+}
