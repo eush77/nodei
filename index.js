@@ -1,7 +1,6 @@
 'use strict';
 
-var zipmap = require('zipmap'),
-    diff = require('object-diff'),
+var diff = require('object-diff'),
     pairs = require('object-pairs'),
     assign = Object.assign || require('object.assign'),
     resolveFrom = require('resolve-from');
@@ -32,26 +31,24 @@ var updateRepl = function (repl, context) {
 /**
  * Construct a minimal sandbox for script execution.
  *
- * It includes:
- *   - console,
- *   - Buffer,
- *   - setTimeout,
- *   - clearTimeout,
- *   - setInterval,
- *   - clearInterval.
- *
+ * @arg {string} filename
  * @return {Object}
  */
-var makeSandbox = function () {
-  var attrs = ['console', 'Buffer', 'setTimeout',
-               'clearTimeout', 'setInterval', 'clearInterval'];
+var makeSandbox = function (filename) {
+  var dirname = path.dirname(filename);
 
-  return zipmap(attrs.map(function (attr) {
-    return {
-      key: attr,
-      value: global[attr]
-    };
-  }));
+  var sandbox = assign({}, global, {
+    __filename: filename,
+    __dirname: dirname,
+    module: {},
+    exports: {},
+    require: function (module) {
+      return require(resolveFrom(dirname, module));
+    }
+  });
+  sandbox.global = sandbox;
+
+  return sandbox;
 };
 
 
@@ -66,12 +63,7 @@ var loadFile = function (repl, filename, cb) {
   fs.readFile(filename, { encoding: 'utf8' }, function (err, script) {
     if (err) return cb(err);
 
-    var sandbox = makeSandbox();
-    sandbox.module = sandbox.exports = {};
-    sandbox.require = function (module) {
-      return require(resolveFrom(path.dirname(filename), module));
-    };
-
+    var sandbox = makeSandbox(filename);
     vm.runInNewContext(script, sandbox, filename);
 
     updateRepl(repl, sandbox);
