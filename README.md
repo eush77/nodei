@@ -72,14 +72,14 @@ Emitted when file is loaded via `.load` or `.reload`, or at startup.
 
 ## Globals
 
-- `require` works as expected (using [browserify](http://browserify.org) under covers).
-- `module` and `exports` are empty.
-- `console`.
-- `Buffer`.
-- `setTimeout`.
-- `clearTimeout`.
-- `setInterval`.
-- `clearInterval`.
+- `require`
+- `module`, `exports` (empty)
+- `console`
+- `Buffer`
+- `setTimeout`
+- `clearTimeout`
+- `setInterval`
+- `clearInterval`
 
 ## Install
 
