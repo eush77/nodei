@@ -24,6 +24,9 @@ process.exitCode = (function (argv) {
       if (argv[0] == '--help') {
         console.log(usage());
       }
+      else if (argv[0] == '--version') {
+        console.log(require('./package.json').version);
+      }
       else {
         nodei(argv[0], options);
       }
